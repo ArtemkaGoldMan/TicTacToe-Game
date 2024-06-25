@@ -1,26 +1,24 @@
 ﻿<Properties StartupConfiguration="{FB7353C5-D27A-4300-928A-9E66DD0A2D6E}|Default">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.TicTacToe PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TicTacToe/PvPGame.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TicTacToe/BotGame.cs">
     <Files>
-      <File FileName="TicTacToe/Program.cs" Line="90" Column="1" />
-      <File FileName="TicTacToe/PvPGame.cs" Line="69" Column="38" />
+      <File FileName="TicTacToe/BotGame.cs" Line="191" Column="23" />
+      <File FileName="TicTacToe/Bot.cs" Line="27" Column="31" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TicTacToe" expanded="True">
-            <Node name="TicTacToe">
-              <Node name="PvPGame.cs" selected="True" />
-            </Node>
+            <Node name="TicTacToe" selected="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

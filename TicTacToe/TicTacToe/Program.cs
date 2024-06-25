@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TicTacToe;
 
 public class Program
 {
@@ -8,7 +8,7 @@ public class Program
         string title = "Tic Tac Toe";
         string description = "Standard Tic Tac Toe game. There are two options of game: bot or PvP.";
 
-        // Define the menu options
+
         string[] menuOptions = { "Bot", "PvP" };
         int selectedOption = 0;
 
@@ -16,12 +16,11 @@ public class Program
         {
             Console.Clear();
 
-            // Center the title text
+            // Center text
             int titleLeftPosition = (Console.WindowWidth - title.Length) / 2;
             Console.SetCursorPosition(titleLeftPosition, 3);
             Console.WriteLine(title);
 
-            // Center the description text
             int descriptionLeftPosition = (Console.WindowWidth - description.Length) / 2;
             Console.SetCursorPosition(descriptionLeftPosition, 5);
             Console.WriteLine(description);
@@ -49,7 +48,6 @@ public class Program
                 Console.WriteLine(menuOptions[i]);
             }
 
-            // Reset colors
             Console.ResetColor();
 
             // Handle keyboard input
@@ -77,18 +75,25 @@ public class Program
             case 0:
                 Console.Clear();
                 Console.WriteLine("You chose to play against a Bot.");
-                // Add bot game logic here
+                Console.WriteLine("The first player is 'X' (Bot), the second is 'O' (you). Enjoy your game!");
+                Console.WriteLine("Press any key to start the game...");
+                Console.ReadKey();
+
+                BotGame botGame = new BotGame();
+                botGame.botGame();
                 break;
+
             case 1:
                 Console.Clear();
-
                 Console.WriteLine("You chose to play PvP.");
-                Console.WriteLine("The fisrt player is 'X', the second is 'O'. Enjoy your game!");
+                Console.WriteLine("The first player is 'X', the second is 'O'. Enjoy your game!");
+                Console.WriteLine("Press any key to start the game...");
+                Console.ReadKey();
 
-                TicTacToe.PvPGame pvpGame = new TicTacToe.PvPGame();
+                PvPGame pvpGame = new PvPGame();
                 pvpGame.pvpGame();
-
                 break;
+
             default:
                 break;
         }
@@ -96,4 +101,5 @@ public class Program
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
     }
+
 }

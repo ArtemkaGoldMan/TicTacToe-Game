@@ -2,36 +2,40 @@
 
 namespace TicTacToe
 {
-    public class PvPGame
+    public class BotGame
     {
-        public int[,] Game = new int[3, 3]; 
-        public int x = 0, y = 0, count = 0; 
-        bool player1 = true, player2 = true; 
+        public int[,] Game = new int[3, 3];
+        public int x = 0, y = 0, count = 0;
+        bool player1 = true, player2 = true;
 
-        
-        public void pvpGame()
+        public void botGame()
         {
-            Console.Clear();
-            print_map_and_X_or_Y(Game); 
+            print_map_and_X_or_Y(Game);
             Console.SetCursorPosition(0, 0);
 
-            
+            // Bot's turn (always starts first)
+            if (player1)
+            {
+                if (BotTurn(ref player1, ref player2, Game, ref x, ref y, 1))
+                    return;
+            }
+
+            // Player's turn
             while (true)
             {
-                if (player1)
-                {
-                    if (PlayerTurn(ref player1, ref player2, Game, ref x, ref y, 1))
-                        break; 
-                }
                 if (player2)
                 {
                     if (PlayerTurn(ref player2, ref player1, Game, ref x, ref y, 2))
-                        break; 
+                        break;
+                }
+                if (player1)
+                {
+                    if (BotTurn(ref player1, ref player2, Game, ref x, ref y, 1))
+                        break;
                 }
             }
         }
 
-        // Handle player's turn
         bool PlayerTurn(ref bool currentPlayer, ref bool nextPlayer, int[,] game, ref int x, ref int y, int playerValue)
         {
             count++;
@@ -44,45 +48,63 @@ namespace TicTacToe
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if (y > 0) y -= 2; // Move cursor up
+                        if (y > 0) y -= 2;
                         break;
                     case ConsoleKey.DownArrow:
-                        if (y < 4) y += 2; // Move cursor down
+                        if (y < 4) y += 2;
                         break;
                     case ConsoleKey.LeftArrow:
-                        if (x > 0) x -= 2; // Move cursor left
+                        if (x > 0) x -= 2;
                         break;
                     case ConsoleKey.RightArrow:
-                        if (x < 4) x += 2; // Move cursor right
+                        if (x < 4) x += 2;
                         break;
                     case ConsoleKey.Enter:
                         if (game[y / 2, x / 2] == 0)
                         {
-                            game[y / 2, x / 2] = playerValue; // Place player's mark
-                            currentPlayer = false; 
+                            game[y / 2, x / 2] = playerValue;
+                            currentPlayer = false;
                         }
                         break;
                 }
 
                 Console.Clear();
-                print_map_and_X_or_Y(game); 
-                Console.SetCursorPosition(x, y); 
+                print_map_and_X_or_Y(game);
+                Console.SetCursorPosition(x, y);
             }
 
-            // Check if current player wins or if it's a draw
             if (check_win(game, count, playerValue) != -1)
             {
-                return true; 
+                return true;
             }
 
             nextPlayer = true;
-            return false; 
+            return false;
         }
 
-     
+        bool BotTurn(ref bool currentPlayer, ref bool nextPlayer, int[,] game, ref int x, ref int y, int botValue)
+        {
+            count++;
+            currentPlayer = true;
+
+            // Bot's logic goes here
+            Bot.bot(game, y / 2, x / 2, count);
+
+            Console.Clear();
+            print_map_and_X_or_Y(game);
+            Console.SetCursorPosition(x, y);
+
+            if (check_win(game, count, botValue) != -1)
+            {
+                return true;
+            }
+
+            nextPlayer = true;
+            return false;
+        }
+
         public void print_map_and_X_or_Y(int[,] map_size)
         {
-            
             int rows = map_size.GetUpperBound(0) + 1;
             int columns = map_size.Length / rows;
             for (int i = 0; i < rows; i++)
@@ -91,47 +113,52 @@ namespace TicTacToe
                 {
                     if (map_size[i, j] == 1)
                     {
-                        Console.Write("x"); 
+                        Console.Write("x");
                     }
                     else if (map_size[i, j] == 2)
                     {
-                        Console.Write("o"); 
+                        Console.Write("o");
                     }
                     else if (map_size[i, j] == 0)
                     {
-                        Console.Write(" "); 
+                        Console.Write(" ");
                     }
                     if (j != 2)
                     {
-                        Console.Write("|"); 
+                        Console.Write("|");
                     }
                     else
                     {
-                        Console.Write(" "); 
+                        Console.Write(" ");
                     }
                 }
-                Console.WriteLine(); 
+                Console.WriteLine();
                 if (i != 2)
                 {
-                    Console.Write("-----"); 
+                    Console.Write("-----");
                 }
-                Console.WriteLine(); 
+                Console.WriteLine();
             }
         }
 
-        // Check if a player has won or if it's a draw
         public static int check_win(int[,] p_mas, int p_count_move, int p_user)
         {
-          
             int k = -1;
             int check_result = checkUser(p_mas, p_user);
             if (check_result == 1)
             {
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine($"User{p_user} wins");
+                if (p_user == 1)
+                {
+                    Console.WriteLine("Bot wins");
+                }
+                else if (p_user == 2)
+                {
+                    Console.WriteLine("User wins");
+                }
                 Console.ReadKey();
-                k = 1; // Set flag for win
+                k = 1;
             }
             else if ((check_result != 1) && (p_count_move == 9))
             {
@@ -139,12 +166,11 @@ namespace TicTacToe
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("Draw");
                 Console.ReadKey();
-                k = 0; // Set flag for draw
+                k = 0;
             }
-            return k; 
+            return k;
         }
 
-        // Check if a specific user has won
         public static int checkUser(int[,] p_mas, int p_user)
         {
             
@@ -156,7 +182,7 @@ namespace TicTacToe
                     return 1; 
                 }
             }
-           
+            
             if ((p_mas[0, 0] == p_user && p_mas[1, 1] == p_user && p_mas[2, 2] == p_user) ||
                 (p_mas[0, 2] == p_user && p_mas[1, 1] == p_user && p_mas[2, 0] == p_user))
             {
