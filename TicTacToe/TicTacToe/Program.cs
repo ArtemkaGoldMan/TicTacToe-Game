@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Program
+public class Program
 {
-    static void Main()
+    public static void Main()
     {
         // Introductory text
         string title = "Tic Tac Toe";
@@ -12,23 +12,20 @@ class Program
         string[] menuOptions = { "Bot", "PvP" };
         int selectedOption = 0;
 
-        // Main loop to keep the menu open until an option is selected
         while (true)
         {
-            // Clear the console
             Console.Clear();
 
             // Center the title text
             int titleLeftPosition = (Console.WindowWidth - title.Length) / 2;
-            Console.SetCursorPosition(titleLeftPosition, 3); // Positioning title 3 rows from the top
+            Console.SetCursorPosition(titleLeftPosition, 3);
             Console.WriteLine(title);
 
             // Center the description text
             int descriptionLeftPosition = (Console.WindowWidth - description.Length) / 2;
-            Console.SetCursorPosition(descriptionLeftPosition, 5); // Positioning description 2 rows below the title
+            Console.SetCursorPosition(descriptionLeftPosition, 5);
             Console.WriteLine(description);
 
-            // Display the menu options
             for (int i = 0; i < menuOptions.Length; i++)
             {
                 if (i == selectedOption)
@@ -48,10 +45,7 @@ class Program
                 int leftPosition = (Console.WindowWidth - menuOptions[i].Length) / 2;
                 int topPosition = (Console.WindowHeight / 2) - (menuOptions.Length / 2) + i;
 
-                // Set the cursor position
                 Console.SetCursorPosition(leftPosition, topPosition);
-
-                // Write the menu option
                 Console.WriteLine(menuOptions[i]);
             }
 
@@ -70,33 +64,35 @@ class Program
             }
             else if (keyInfo.Key == ConsoleKey.Enter)
             {
-                // Execute the action for the selected option
                 ExecuteAction(selectedOption);
                 break;
             }
         }
     }
 
-    static void ExecuteAction(int option)
+    public static void ExecuteAction(int option)
     {
-        // Perform actions based on the selected option
         switch (option)
         {
             case 0:
                 Console.Clear();
                 Console.WriteLine("You chose to play against a Bot.");
-                // Add your code for playing against a bot here
+                // Add bot game logic here
                 break;
             case 1:
                 Console.Clear();
+
                 Console.WriteLine("You chose to play PvP.");
-                // Add your code for person vs bot here
+                Console.WriteLine("The fisrt player is 'X', the second is 'O'. Enjoy your game!");
+
+                TicTacToe.PvPGame pvpGame = new TicTacToe.PvPGame();
+                pvpGame.pvpGame();
+
                 break;
             default:
                 break;
         }
 
-        // Wait for a key press before closing
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
     }
